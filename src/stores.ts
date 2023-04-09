@@ -1,7 +1,8 @@
 import { readable, writable } from 'svelte/store';
 import type { ContentType, TimeRange } from './types';
 
-const APP_URI = 'http://localhost:5173/';
+// const APP_URI = 'http://localhost:5173/';
+const APP_URI = 'https://unwrapped.saintkappa.xyz/';
 const CLIENT_ID = '81d2121083774c79b9f34569b04e6551';
 export const appUri = readable(APP_URI);
 export const clientId = readable(CLIENT_ID);
