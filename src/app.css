@@ -1,3 +1,13 @@
+@font-face {
+    font-family: GothamBlack;
+    src: url('/fonts/Gotham-Black.otf') format('opentype');
+}
+
+@font-face {
+    font-family: GothamBold;
+    src: url('/fonts/Gotham-Bold.otf') format('opentype');
+}
+
 :root {
     font-family: GothamBold, sans-serif;
     line-height: 1.5;
@@ -9,16 +19,6 @@
     --spotify-green: #1ed760;
     --bg-primary: #121212;
     --bg-secondary: hsl(0, 0%, 23%);
-}
-
-@font-face {
-    font-family: GothamBlack;
-    src: url('fonts/Gotham-Black.otf') format('opentype');
-}
-
-@font-face {
-    font-family: GothamBold;
-    src: url('fonts/Gotham-Bold.otf') format('opentype');
 }
 
 * {
