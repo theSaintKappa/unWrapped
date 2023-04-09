@@ -1,0 +1,64 @@
+:root {
+    font-family: GothamBold, sans-serif;
+    line-height: 1.5;
+    background-color: var(--clr-background);
+    color-scheme: dark light;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+
+    --spotify-green: #1ed760;
+    --bg-primary: #121212;
+    --bg-secondary: hsl(0, 0%, 23%);
+}
+
+@font-face {
+    font-family: GothamBlack;
+    src: url('fonts/Gotham-Black.otf') format('opentype');
+}
+
+@font-face {
+    font-family: GothamBold;
+    src: url('fonts/Gotham-Bold.otf') format('opentype');
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+::-moz-selection {
+    color: var(--bg-primary);
+    background: var(--spotify-green);
+}
+
+::selection {
+    color: var(--bg-primary);
+    background: var(--spotify-green);
+}
+
+button {
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+img,
+svg {
+    display: block;
+    width: 100%;
+    user-select: none;
+}
+
+input,
+button {
+    font: inherit;
+    all: unset;
+}
+
+button {
+    cursor: pointer;
+}
+
+body {
+    height: 100vh;
+    height: 100svh;
+}
