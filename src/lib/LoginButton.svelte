@@ -1,7 +1,7 @@
 <script lang="ts">
     import { appUri, clientId } from '../stores';
 
-    const SCOPE = 'user-top-read';
+    const SCOPE = 'user-read-private user-read-email user-top-read';
     const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     const generateRandomString = (length: number) => {

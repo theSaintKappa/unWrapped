@@ -6,10 +6,12 @@
 
 {#if cardsContent}
     {#each cardsContent as card, i}
-        <figure data-index={`#${i + 1}`}>
-            <img src={card.image} alt={card.caption} />
-            <figcaption>{card.caption}</figcaption>
-        </figure>
+        <a href={card.url} target="_blank">
+            <figure data-index={`#${i + 1}`}>
+                <img src={card.image} alt={card.caption} />
+                <figcaption>{card.caption}</figcaption>
+            </figure>
+        </a>
     {/each}
 {:else}
     <Skeleton count={20} />

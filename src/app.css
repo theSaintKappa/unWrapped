@@ -37,6 +37,11 @@
     background: var(--spotify-green);
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 button {
     -webkit-tap-highlight-color: transparent !important;
 }

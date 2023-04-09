@@ -3,6 +3,7 @@ export type TimeRange = 'short_term' | 'medium_term' | 'long_term';
 export interface Card {
     caption: string;
     image: string;
+    url: string;
 }
 export interface Content {
     tracks: {

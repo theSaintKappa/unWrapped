@@ -13,11 +13,18 @@
         const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}&limit=50`, {
             headers: { Authorization: 'Bearer ' + $token },
         });
+        if (!response.ok) {
+            console.info('Token expired. Please log in again.');
+            $token = null;
+            localStorage.removeItem('access-token');
+            return;
+        }
         const data = await response.json();
         content[type][timeRange] = data.items.map((item: any) => {
             return {
                 caption: item.name,
                 image: item.type === 'artist' ? item.images[0].url : item.album.images[0].url,
+                url: item.external_urls.spotify,
             };
         });
     };
