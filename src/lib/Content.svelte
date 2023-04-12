@@ -13,7 +13,7 @@
         const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}&limit=50`, {
             headers: { Authorization: 'Bearer ' + $token },
         });
-        if (!response.ok) {
+        if (response.status === 401) {
             console.info('Token expired. Please log in again.');
             $token = null;
             localStorage.removeItem('access-token');

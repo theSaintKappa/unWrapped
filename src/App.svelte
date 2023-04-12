@@ -21,8 +21,17 @@
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body,
         });
+
+        if (response.status === 401) {
+            console.info('Token expired. Please log in again.');
+            $token = null;
+            localStorage.removeItem('access-token');
+            return;
+        }
+
         const data = await response.json();
         localStorage.setItem('access-token', data.access_token);
+        // localStorage.setItem('refresh-token', data.refresh_token);
         $token = data.access_token;
     };
 
@@ -32,7 +41,7 @@
         const response = await fetch('https://api.spotify.com/v1/me', {
             headers: { Authorization: 'Bearer ' + token },
         });
-        if (!response.ok) {
+        if (response.status === 401) {
             console.info('Token expired. Please log in again.');
             $token = null;
             localStorage.removeItem('access-token');
