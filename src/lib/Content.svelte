@@ -23,7 +23,7 @@
         content[type][timeRange] = data.items.map((item: any) => {
             return {
                 caption: item.name,
-                image: item.type === 'artist' ? item.images[0].url : item.album.images[0].url,
+                image: item.type === 'artist' ? item.images[0]?.url ?? './artist-empty.svg' : item.album.images[0]?.url ?? './track-empty.svg',
                 url: item.external_urls.spotify,
             };
         });

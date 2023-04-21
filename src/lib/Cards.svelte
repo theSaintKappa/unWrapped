@@ -1,14 +1,15 @@
 <script lang="ts">
     import Skeleton from './Skeleton.svelte';
+    import { fade } from 'svelte/transition';
     import type { Card } from '../types';
-    export let cardsContent: Card[] = [];
+    export let cardsContent: Card[];
 </script>
 
 {#if cardsContent}
     {#each cardsContent as card, i}
-        <a href={card.url} target="_blank">
+        <a href={card.url} target="_blank" in:fade={{ delay: i * 40, duration: 350 }}>
             <figure data-index={`#${i + 1}`}>
-                <img src={card.image} alt={card.caption} />
+                <img src={card.image} alt={card.caption} loading="lazy" />
                 <figcaption>{card.caption}</figcaption>
             </figure>
         </a>
