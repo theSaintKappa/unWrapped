@@ -17,3 +17,8 @@ export interface Content {
         long_term?: Card[];
     };
 }
+export interface User {
+    displayName: string;
+    avatar: string;
+    url: string;
+}

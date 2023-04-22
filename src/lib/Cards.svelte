@@ -9,7 +9,7 @@
     {#each cardsContent as card, i}
         <a href={card.url} target="_blank" in:fade={{ delay: i * 40, duration: 350 }}>
             <figure data-index={`#${i + 1}`}>
-                <img src={card.image} alt={card.caption} loading="lazy" />
+                <img src={card.image} alt={card.caption} />
                 <figcaption>{card.caption}</figcaption>
             </figure>
         </a>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { token, activeContentType, activeTimeRange } from '../stores';
     import Header from './Header.svelte';
+    import User from './User.svelte';
     import TypeTabs from './ContentTypeTabs.svelte';
     import TimeRangeTabs from './TimeRangeTabs.svelte';
     import Cards from './Cards.svelte';
@@ -33,6 +34,7 @@
 </script>
 
 <Header />
+<User />
 <TypeTabs />
 <div class="grid">
     <Cards cardsContent={content[$activeContentType][$activeTimeRange]} />

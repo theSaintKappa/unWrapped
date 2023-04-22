@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { code, appUri, clientId, token } from './stores';
+    import { code, appUri, clientId, token, user } from './stores';
     import Landing from './lib/Landing.svelte';
     import Content from './lib/Content.svelte';
 
@@ -48,7 +48,7 @@
             return;
         }
         const data = await response.json();
-        console.log(`Hello, ${data.display_name}!`);
+        $user = { displayName: data.display_name, avatar: data.images[0]?.url ?? null, url: data.external_urls.spotify };
     };
 </script>
 
