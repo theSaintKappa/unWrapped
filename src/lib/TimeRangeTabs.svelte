@@ -7,14 +7,14 @@
     };
 </script>
 
-<div class="tabs {$activeTimeRange}">
+<div>
     <button on:click={() => setTimeRange('short_term')} class:active={$activeTimeRange === 'short_term'}>4 weeks</button>
     <button on:click={() => setTimeRange('medium_term')} class:active={$activeTimeRange === 'medium_term'}>6 months</button>
     <button on:click={() => setTimeRange('long_term')} class:active={$activeTimeRange === 'long_term'}>lifetime</button>
 </div>
 
 <style>
-    .tabs {
+    div {
         display: flex;
         gap: 2rem;
     }

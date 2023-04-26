@@ -1,5 +1,6 @@
 <script lang="ts">
     import { token, activeContentType, activeTimeRange } from '../stores';
+    import _refreshToken from '../refreshToken';
     import Header from './Header.svelte';
     import User from './User.svelte';
     import TypeTabs from './ContentTypeTabs.svelte';
@@ -11,16 +12,13 @@
     const fetchContent = async (type: ContentType, timeRange: TimeRange) => {
         if (content[type][timeRange]) return;
 
-        const response = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}&limit=50`, {
+        const data = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}&limit=50`, {
             headers: { Authorization: 'Bearer ' + $token },
+        }).then((res) => {
+            if (res.status === 401) return _refreshToken();
+            return res.json();
         });
-        if (response.status === 401) {
-            console.info('Token expired. Please log in again.');
-            $token = null;
-            localStorage.removeItem('access-token');
-            return;
-        }
-        const data = await response.json();
+
         content[type][timeRange] = data.items.map((item: any) => {
             return {
                 caption: item.name,

@@ -13,7 +13,16 @@ const getCode = () => {
 };
 
 export const code = writable(getCode());
+
 export const token = writable(localStorage.getItem('access-token') ?? null);
+token.subscribe((value) => {
+    if (value) localStorage.setItem('access-token', value);
+});
+
+export const refreshToken = writable(localStorage.getItem('refresh-token') ?? null);
+refreshToken.subscribe((value) => {
+    if (value) localStorage.setItem('refresh-token', value);
+});
 
 export const user = writable<User>(null);
 

@@ -11,7 +11,7 @@
             />
         </svg>
 
-        <h1><span class="prefix">un</span>Wrapped</h1>
+        <h1><span class="prefix">un</span><span>Wrapped</span></h1>
     </section>
     <LogoutButton />
 </header>

@@ -11,13 +11,13 @@
     <title>unWrapped | top {$activeContentType}</title>
 </svelte:head>
 
-<div class="tabs {$activeContentType}">
+<div class={$activeContentType}>
     <button on:click={() => setContentType('tracks')} class:active={$activeContentType === 'artists'}>Tracks</button>
     <button on:click={() => setContentType('artists')} class:active={$activeContentType === 'tracks'}>Artists</button>
 </div>
 
 <style>
-    .tabs {
+    div {
         position: sticky;
         top: 1rem;
         backdrop-filter: blur(16px) brightness(0.85);
@@ -28,7 +28,7 @@
         box-shadow: inset 0 0 2px 2px var(--spotify-green);
     }
 
-    .tabs::before {
+    div::before {
         content: '';
         position: absolute;
         top: 0;
@@ -37,13 +37,13 @@
         background-color: var(--spotify-green);
         border-radius: 4rem;
         z-index: -1;
-        transition: cubic-bezier(0.6, 0, 0.4, 1) 300ms;
+        transition: left cubic-bezier(0.65, 0, 0.35, 1) 200ms;
     }
 
-    .tabs.tracks::before {
+    div.tracks::before {
         left: -0.5%;
     }
-    .tabs.artists::before {
+    div.artists::before {
         left: 50.5%;
     }
 

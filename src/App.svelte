@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { code, appUri, clientId, token, user } from './stores';
+    import { code, appUri, clientId, token, user, refreshToken } from './stores';
+    import _refreshToken from './refreshToken';
     import Landing from './lib/Landing.svelte';
     import Content from './lib/Content.svelte';
 
@@ -16,38 +17,31 @@
             code_verifier: codeVerifier,
         });
 
-        const response = await fetch('https://accounts.spotify.com/api/token', {
+        const data = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body,
+        }).then((res) => {
+            if (res.status === 401) return _refreshToken();
+            return res.json();
         });
 
-        if (response.status === 401) {
-            console.info('Token expired. Please log in again.');
-            $token = null;
-            localStorage.removeItem('access-token');
-            return;
-        }
+        token.set(data.access_token);
+        refreshToken.set(data.refresh_token);
 
-        const data = await response.json();
-        localStorage.setItem('access-token', data.access_token);
-        // localStorage.setItem('refresh-token', data.refresh_token);
-        $token = data.access_token;
+        localStorage.removeItem('code-verifier');
     };
 
     $: $token && hello($token);
 
     const hello = async (token: string) => {
-        const response = await fetch('https://api.spotify.com/v1/me', {
+        const data = await fetch('https://api.spotify.com/v1/me', {
             headers: { Authorization: 'Bearer ' + token },
+        }).then((res) => {
+            if (res.status === 401) return _refreshToken();
+            return res.json();
         });
-        if (response.status === 401) {
-            console.info('Token expired. Please log in again.');
-            $token = null;
-            localStorage.removeItem('access-token');
-            return;
-        }
-        const data = await response.json();
+
         $user = { displayName: data.display_name, avatar: data.images[0]?.url ?? null, url: data.external_urls.spotify };
     };
 </script>

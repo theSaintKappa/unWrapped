@@ -1,9 +1,11 @@
 <script lang="ts">
-    import { token } from '../stores';
+    import { token, refreshToken } from '../stores';
 
     const logOut = () => {
         localStorage.removeItem('access-token');
-        $token = null;
+        token.set(null);
+        localStorage.removeItem('refresh-token');
+        refreshToken.set(null);
     };
 </script>
 
