@@ -1,16 +1,19 @@
 <script lang="ts">
-    import { token, activeContentType, activeTimeRange } from '../stores';
+    import { token, activeContentType, activeTimeRange, user } from '../stores';
     import _refreshToken from '../refreshToken';
     import Header from './Header.svelte';
     import User from './User.svelte';
     import TypeTabs from './ContentTypeTabs.svelte';
-    import TimeRangeTabs from './TimeRangeTabs.svelte';
+    import DownloadImage from './DownloadImage.svelte';
     import Cards from './Cards.svelte';
+    import TimeRangeTabs from './TimeRangeTabs.svelte';
     import type { Content, ContentType, TimeRange } from '../types';
 
     let content: Content = { tracks: {}, artists: {} };
     const fetchContent = async (type: ContentType, timeRange: TimeRange) => {
         if (content[type][timeRange]) return;
+
+        window.scrollTo({ top: 0 });
 
         const data = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}&limit=50`, {
             headers: { Authorization: 'Bearer ' + $token },
@@ -19,7 +22,7 @@
             return res.json();
         });
 
-        content[type][timeRange] = data.items.map((item: any) => {
+        content[type][timeRange] = data?.items.map((item: any) => {
             return {
                 caption: item.name,
                 image: item.type === 'artist' ? item.images[0]?.url ?? './artist-empty.svg' : item.album.images[0]?.url ?? './track-empty.svg',
@@ -34,6 +37,9 @@
 <Header />
 <User />
 <TypeTabs />
+{#if content[$activeContentType][$activeTimeRange]}
+    <DownloadImage contentType={$activeContentType} timeRange={$activeTimeRange} user={$user} content={content[$activeContentType][$activeTimeRange].slice(0, 12)} />
+{/if}
 <div class="grid">
     <Cards cardsContent={content[$activeContentType][$activeTimeRange]} />
 </div>
@@ -44,10 +50,10 @@
 <style>
     .grid {
         display: grid;
-        margin: 2rem 0 5rem;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        margin: 1rem 0 5rem;
+        grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
         width: min(100% - 2rem, 1200px);
-        grid-gap: 1rem;
+        gap: 0.75rem;
     }
 
     @media screen and (max-width: 600px) {

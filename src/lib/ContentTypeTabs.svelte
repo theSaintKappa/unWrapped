@@ -11,13 +11,13 @@
     <title>unWrapped | top {$activeContentType}</title>
 </svelte:head>
 
-<div class={$activeContentType}>
+<nav class={$activeContentType}>
     <button on:click={() => setContentType('tracks')} class:active={$activeContentType === 'artists'}>Tracks</button>
     <button on:click={() => setContentType('artists')} class:active={$activeContentType === 'tracks'}>Artists</button>
-</div>
+</nav>
 
 <style>
-    div {
+    nav {
         position: sticky;
         top: 1rem;
         backdrop-filter: blur(16px) brightness(0.85);
@@ -28,7 +28,7 @@
         box-shadow: inset 0 0 2px 2px var(--spotify-green);
     }
 
-    div::before {
+    nav::before {
         content: '';
         position: absolute;
         top: 0;
@@ -40,10 +40,10 @@
         transition: left cubic-bezier(0.65, 0, 0.35, 1) 200ms;
     }
 
-    div.tracks::before {
+    nav.tracks::before {
         left: -0.5%;
     }
-    div.artists::before {
+    nav.artists::before {
         left: 50.5%;
     }
 

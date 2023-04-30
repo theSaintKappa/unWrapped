@@ -4,7 +4,7 @@
     import Landing from './lib/Landing.svelte';
     import Content from './lib/Content.svelte';
 
-    $: $code && getToken($code);
+    $: if ($code) getToken($code);
 
     const getToken = async (code: string) => {
         let codeVerifier = localStorage.getItem('code-verifier');
@@ -32,7 +32,7 @@
         localStorage.removeItem('code-verifier');
     };
 
-    $: $token && hello($token);
+    $: if ($token) hello($token);
 
     const hello = async (token: string) => {
         const data = await fetch('https://api.spotify.com/v1/me', {

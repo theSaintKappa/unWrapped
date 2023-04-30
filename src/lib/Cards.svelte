@@ -38,10 +38,11 @@
 
     figure::after {
         content: attr(data-index);
+        font-family: GothamBlack;
         position: absolute;
-        top: -0.1rem;
+        top: -0.15rem;
         left: 0.3rem;
-        font-size: 2rem;
+        font-size: 1.5rem;
         -webkit-text-fill-color: rgba(255, 255, 255, 0.85);
         -webkit-text-stroke-width: 0.05em;
         -webkit-text-stroke-color: var(--bg-primary);

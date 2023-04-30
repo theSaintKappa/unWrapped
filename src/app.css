@@ -1,22 +1,22 @@
 @font-face {
-    font-family: GothamBlack;
-    font-style: normal;
-    font-weight: normal;
-    src: url('/fonts/Gotham-Black.woff2') format('woff2'), url('/fonts/Gotham-Black.woff') format('woff'), url('/fonts/Gotham-Black.ttf') format('opentype');
-}
-
-@font-face {
     font-family: GothamBold;
     font-style: normal;
     font-weight: normal;
     src: url('/fonts/Gotham-Bold.woff2') format('woff2'), url('/fonts/Gotham-Bold.woff') format('woff'), url('/fonts/Gotham-Bold.ttf') format('opentype');
 }
 
+@font-face {
+    font-family: GothamBlack;
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/Gotham-Black.woff2') format('woff2'), url('/fonts/Gotham-Black.woff') format('woff'), url('/fonts/Gotham-Black.ttf') format('opentype');
+}
+
 :root {
     font-family: GothamBold, sans-serif;
     /* font-family: sans-serif !important; */
     line-height: 1.5;
-    background-color: var(--clr-background);
+    background-color: var(--bg-primary);
     color-scheme: dark;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -24,6 +24,10 @@
     --spotify-green: #1ed760;
     --bg-primary: #121212;
     --bg-secondary: #2a2a2a;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 * {
