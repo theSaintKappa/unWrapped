@@ -128,7 +128,7 @@
         position: relative;
         display: flex;
         justify-content: center;
-        margin-top: 0.15rem;
+        margin-top: 0.25rem;
         transition: scale 125ms ease;
         color: #e1289f;
         filter: invert(1);

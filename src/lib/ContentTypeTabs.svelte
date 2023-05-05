@@ -19,10 +19,9 @@
     nav {
         position: sticky;
         top: 1rem;
-        backdrop-filter: blur(16px) brightness(0.85);
+        backdrop-filter: blur(20px) brightness(0.9);
         z-index: 1;
         display: flex;
-        align-items: center;
         border: 4px solid var(--spotify-green);
         border-radius: 4rem;
         box-shadow: inset 0 0 2px 2px var(--spotify-green);
@@ -48,6 +47,7 @@
     }
 
     button {
+        font-family: GothamBlack;
         font-size: 1.75rem;
         padding: 0.75rem 1.5rem;
         color: var(--bg-primary);

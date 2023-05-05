@@ -10,6 +10,8 @@
 
     let randomKey = 0;
 
+    const urlParams = [`&offset=0&limit=49`, `&offset=49&limit=50`] as const;
+
     let content: Content = { tracks: {}, artists: {} };
     async function fetchContent(type: ContentType, timeRange: TimeRange) {
         window.scrollTo({ top: 0 });
@@ -17,14 +19,18 @@
 
         if (content[type][timeRange]) return;
 
-        const res = await fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}&limit=50`, {
-            headers: { Authorization: 'Bearer ' + $accessToken },
-        });
-        if (res.status === 401) return _refreshToken();
+        const res: UsersTopResponse[] = await Promise.all(
+            urlParams.map((params) =>
+                fetch(`https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}${params}`, { headers: { Authorization: 'Bearer ' + $accessToken } }).then((res) => {
+                    if (res.status === 401) return _refreshToken();
+                    return res.json();
+                })
+            )
+        );
 
-        const data: UsersTopResponse = await res.json();
+        const data = [...res[0]?.items, ...res[1]?.items];
 
-        content[type][timeRange] = data.items.map((item: UsersTopItem) => {
+        content[type][timeRange] = data.map((item: UsersTopItem) => {
             return {
                 caption: item.name,
                 image: item.type === 'artist' ? item.images[0]?.url ?? './artist-empty.svg' : item.album.images[0]?.url ?? './track-empty.svg',

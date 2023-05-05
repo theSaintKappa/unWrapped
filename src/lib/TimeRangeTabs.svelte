@@ -19,6 +19,7 @@
     }
 
     button {
+        font-family: GothamBlack;
         position: relative;
         display: flex;
         justify-content: center;

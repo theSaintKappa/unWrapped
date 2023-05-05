@@ -6,16 +6,13 @@ interface Card {
     url: string;
 }
 interface Content {
-    tracks: {
-        short_term?: Card[];
-        medium_term?: Card[];
-        long_term?: Card[];
-    };
-    artists: {
-        short_term?: Card[];
-        medium_term?: Card[];
-        long_term?: Card[];
-    };
+    tracks: UsersTopCardContent;
+    artists: UsersTopCardContent;
+}
+interface UsersTopCardContent {
+    short_term?: Card[];
+    medium_term?: Card[];
+    long_term?: Card[];
 }
 interface User {
     displayName: string;
