@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { clientId, token, refreshToken } from './stores';
+import { clientId, accessToken, refreshToken } from './stores';
 
 export default async function _refreshToken() {
     console.log('Refreshing token...');
@@ -19,8 +19,7 @@ export default async function _refreshToken() {
             body,
         }).then((res) => res.json());
 
-        token.set(data.access_token);
-
+        accessToken.set(data.access_token);
         refreshToken.set(data.refresh_token);
     } catch (err) {
         console.error('Error when fetching refresh token: ', err);

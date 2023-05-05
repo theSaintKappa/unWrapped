@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { code, appUri, clientId, token, user, refreshToken } from './stores';
+    import { code, appUri, clientId, accessToken, user, refreshToken } from './stores';
     import _refreshToken from './refreshToken';
     import Landing from './lib/Landing.svelte';
     import Content from './lib/Content.svelte';
 
-    $: $code && getToken($code);
+    $: if ($code) getToken($code);
 
-    const getToken = async (code: string) => {
+    async function getToken(code: string) {
         let codeVerifier = localStorage.getItem('code-verifier');
 
         let body = new URLSearchParams({
@@ -17,40 +17,40 @@
             code_verifier: codeVerifier,
         });
 
-        const data = await fetch('https://accounts.spotify.com/api/token', {
+        const res = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body,
-        }).then((res) => {
-            if (res.status === 401) return _refreshToken();
-            return res.json();
         });
+        if (res.status === 401) return _refreshToken();
 
-        token.set(data.access_token);
+        const data: AccessTokenResponse = await res.json();
+
+        accessToken.set(data.access_token);
         refreshToken.set(data.refresh_token);
 
         localStorage.removeItem('code-verifier');
-    };
+    }
 
-    $: $token && hello($token);
+    $: if ($accessToken) hello($accessToken);
 
-    const hello = async (token: string) => {
-        const data = await fetch('https://api.spotify.com/v1/me', {
+    async function hello(token: string) {
+        const res = await fetch('https://api.spotify.com/v1/me', {
             headers: { Authorization: 'Bearer ' + token },
-        }).then((res) => {
-            if (res.status === 401) return _refreshToken();
-            return res.json();
         });
+        if (res.status === 401) return _refreshToken();
+
+        const data: UserPrivate = await res.json();
 
         $user = { displayName: data.display_name, avatar: data.images[0]?.url ?? null, url: data.external_urls.spotify };
-    };
+    }
 </script>
 
-<main class:landing={!$token}>
-    {#if !$token}
-        <Landing />
-    {:else}
+<main class:landing={!$accessToken}>
+    {#if $accessToken}
         <Content />
+    {:else}
+        <Landing />
     {/if}
 </main>
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { TimeRange } from '../types';
     import { activeTimeRange } from '../stores';
 
     const setTimeRange = (timeRange: TimeRange) => {

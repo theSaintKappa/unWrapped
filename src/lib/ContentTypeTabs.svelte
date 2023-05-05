@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { ContentType } from '../types';
     import { activeContentType } from '../stores';
 
     const setContentType = (contentType: ContentType) => {
@@ -11,24 +10,25 @@
     <title>unWrapped | top {$activeContentType}</title>
 </svelte:head>
 
-<div class={$activeContentType}>
+<nav class={$activeContentType}>
     <button on:click={() => setContentType('tracks')} class:active={$activeContentType === 'artists'}>Tracks</button>
     <button on:click={() => setContentType('artists')} class:active={$activeContentType === 'tracks'}>Artists</button>
-</div>
+</nav>
 
 <style>
-    div {
+    nav {
         position: sticky;
         top: 1rem;
         backdrop-filter: blur(16px) brightness(0.85);
         z-index: 1;
         display: flex;
+        align-items: center;
         border: 4px solid var(--spotify-green);
         border-radius: 4rem;
         box-shadow: inset 0 0 2px 2px var(--spotify-green);
     }
 
-    div::before {
+    nav::before {
         content: '';
         position: absolute;
         top: 0;
@@ -40,16 +40,16 @@
         transition: left cubic-bezier(0.65, 0, 0.35, 1) 200ms;
     }
 
-    div.tracks::before {
+    nav.tracks::before {
         left: -0.5%;
     }
-    div.artists::before {
+    nav.artists::before {
         left: 50.5%;
     }
 
     button {
-        font-size: 1.4rem;
-        padding: 0.75rem 1.75rem;
+        font-size: 1.75rem;
+        padding: 0.75rem 1.5rem;
         color: var(--bg-primary);
         transition: color 200ms;
     }
