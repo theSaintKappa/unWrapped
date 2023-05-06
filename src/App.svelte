@@ -44,14 +44,10 @@
 
         $user = { displayName: data.display_name, avatar: data.images[0]?.url ?? null, url: data.external_urls.spotify };
     }
-
-    // setTimeout(() => {
-    //     accessToken.set('asd');
-    // }, 2000);
 </script>
 
 <main class:landing={!$accessToken}>
-    {#if $accessToken}
+    {#if $accessToken !== null}
         <Content />
     {:else}
         <Landing />

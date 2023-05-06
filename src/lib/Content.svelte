@@ -28,6 +28,8 @@
             )
         );
 
+        if (!res[0] || !res[1]) return;
+
         const data = [...res[0]?.items, ...res[1]?.items];
 
         content[type][timeRange] = data.map((item: UsersTopItem) => {
