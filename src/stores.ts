@@ -2,7 +2,7 @@ import { readable, writable } from 'svelte/store';
 
 const APP_URI = `${location.protocol}//${location.host}${location.pathname}`;
 const CLIENT_ID = '81d2121083774c79b9f34569b04e6551';
-export const appUri = readable(APP_URI);
+export const appURI = readable(APP_URI);
 export const clientId = readable(CLIENT_ID);
 
 function getCode() {

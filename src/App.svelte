@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { code, appUri, clientId, accessToken, user, refreshToken } from './stores';
+    import { code, appURI, clientId, accessToken, user, refreshToken } from './stores';
     import _refreshToken from './refreshToken';
     import Landing from './lib/Landing.svelte';
     import Content from './lib/Content.svelte';
@@ -12,7 +12,7 @@
         let body = new URLSearchParams({
             grant_type: 'authorization_code',
             code: code,
-            redirect_uri: $appUri,
+            redirect_uri: $appURI,
             client_id: $clientId,
             code_verifier: codeVerifier,
         });

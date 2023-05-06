@@ -1,18 +1,27 @@
 <script lang="ts">
     import Skeleton from './Skeleton.svelte';
-    import { fade } from 'svelte/transition';
+    import { blur } from 'svelte/transition';
     export let cardsContent: Card[];
 </script>
 
 {#if cardsContent}
     {#each cardsContent as card, i}
-        <a href={card.url} target="_blank" in:fade={{ delay: i * 30, duration: 400 }}>
+        <a href={card.url} target="_blank" in:blur={{ delay: i * 15, duration: 350 }}>
             <figure data-index={`#${i + 1}`}>
                 <img src={card.image} alt={card.caption} />
                 <figcaption>{card.caption}</figcaption>
             </figure>
         </a>
     {/each}
+    <div class="back-to-top" in:blur={{ delay: cardsContent.length * 15, duration: 350 }}>
+        <button on:click={() => window.scrollTo({ top: 0 })}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                    d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM385 231c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-71-71V376c0 13.3-10.7 24-24 24s-24-10.7-24-24V193.9l-71 71c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 119c9.4-9.4 24.6-9.4 33.9 0L385 231z"
+                />
+            </svg>
+        </button>
+    </div>
 {:else}
     <Skeleton count={20} />
 {/if}
@@ -52,5 +61,38 @@
         left: 1rem;
         font-size: clamp(1rem, 2vw, 1.25rem);
         bottom: 0.5rem;
+    }
+
+    .back-to-top {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--bg-secondary);
+        border-radius: 0.5rem;
+        aspect-ratio: 1;
+        position: relative;
+    }
+
+    .back-to-top::after {
+        content: 'Back to top';
+        position: absolute;
+        left: 1rem;
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        bottom: 0.5rem;
+    }
+
+    .back-to-top > button {
+        fill: var(--spotify-green);
+        width: 50%;
+        cursor: pointer;
+        transition: scale 150ms ease;
+    }
+
+    .back-to-top > button:hover {
+        scale: 1.1;
+    }
+
+    .back-to-top > button:active {
+        scale: 1;
     }
 </style>

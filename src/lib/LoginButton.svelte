@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { appUri, clientId } from '../stores';
+    import { appURI, clientId } from '../stores';
 
-    const SCOPE = 'user-read-private user-read-email user-top-read';
+    const scope = 'user-read-private user-read-email user-top-read';
     const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     const generateRandomString = (length: number) => {
@@ -28,17 +28,18 @@
 
         localStorage.setItem('code-verifier', codeVerifier);
 
-        let args = new URLSearchParams({
+        const url = new URL('https://accounts.spotify.com/authorize');
+        url.search = new URLSearchParams({
             response_type: 'code',
             client_id: $clientId,
-            scope: SCOPE,
-            redirect_uri: $appUri,
+            scope,
+            redirect_uri: $appURI,
             state,
             code_challenge_method: 'S256',
             code_challenge: codeChallenge,
-        });
+        }).toString();
 
-        window.location.href = 'https://accounts.spotify.com/authorize?' + args;
+        window.location.href = url.toString();
     };
 </script>
 
