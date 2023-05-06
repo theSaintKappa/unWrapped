@@ -27,5 +27,12 @@ refreshToken.subscribe((value) => {
 
 export const user = writable<User>(null);
 
-export const activeContentType = writable<ContentType>('tracks');
-export const activeTimeRange = writable<TimeRange>('short_term');
+export const activeContentType = writable<ContentType>(<ContentType>localStorage.getItem('active-content-type') ?? 'tracks');
+activeContentType.subscribe((value) => {
+    localStorage.setItem('active-content-type', value);
+});
+
+export const activeTimeRange = writable<TimeRange>(<TimeRange>localStorage.getItem('active-time-range') ?? 'short_term');
+activeTimeRange.subscribe((value) => {
+    localStorage.setItem('active-time-range', value);
+});
