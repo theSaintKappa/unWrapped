@@ -45,7 +45,7 @@
 </script>
 
 <Header />
-<User />
+<!-- <User /> -->
 <TypeTabs />
 {#if content[$activeContentType][$activeTimeRange] && $user}
     <ImageDownload contentType={$activeContentType} timeRange={$activeTimeRange} user={$user} content={content[$activeContentType][$activeTimeRange].slice(0, 12)} />

@@ -1,5 +1,6 @@
 <script lang="ts">
     import LogoutButton from './LogoutButton.svelte';
+    import User from './User.svelte';
 </script>
 
 <header>
@@ -13,7 +14,8 @@
 
         <h1><span class="prefix">un</span><span>Wrapped</span></h1>
     </section>
-    <LogoutButton />
+    <!-- <LogoutButton /> -->
+    <User />
 </header>
 
 <style>
