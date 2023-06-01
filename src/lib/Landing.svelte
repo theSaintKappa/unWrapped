@@ -2,6 +2,9 @@
     import LoginButton from './LoginButton.svelte';
 </script>
 
+<svelte:head>
+    <title>unWrapped</title>
+</svelte:head>
 <div class="content">
     <section>
         <header>
@@ -68,6 +71,7 @@
         flex-direction: column;
         align-items: center;
         font-size: clamp(0.725rem, 3.5vw, 1.65rem);
+        z-index: 1;
     }
 
     @media screen and (max-width: 550px) {

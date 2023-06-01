@@ -6,10 +6,6 @@
     };
 </script>
 
-<svelte:head>
-    <title>unWrapped | top {$activeContentType}</title>
-</svelte:head>
-
 <nav class={$activeContentType}>
     <button on:click={() => setContentType('tracks')} class:active={$activeContentType === 'artists'}>Tracks</button>
     <button on:click={() => setContentType('artists')} class:active={$activeContentType === 'tracks'}>Artists</button>

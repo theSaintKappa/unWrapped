@@ -44,6 +44,9 @@
     $: if ($accessToken) fetchContent($activeContentType, $activeTimeRange);
 </script>
 
+<svelte:head>
+    <title>unWrapped | {$user?.displayName} - top {$activeContentType}</title>
+</svelte:head>
 <Header />
 <User />
 <TypeTabs />
@@ -60,19 +63,26 @@
 </div>
 
 <style>
+    :root {
+        --gap: 0.75rem;
+    }
+
     .grid {
         display: grid;
-        margin: 1rem 0 5rem;
+        margin: var(--gap) 0 5rem;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        width: min(100% - 2rem, 1200px);
-        gap: 0.75rem;
+        width: min(100% - 2 * var(--gap), 1200px);
+        gap: var(--gap);
         transition: gap 250ms;
     }
 
     @media screen and (max-width: 650px) {
+        :root {
+            --gap: 0.5rem;
+        }
+
         .grid {
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 0.5rem;
         }
     }
 
