@@ -55,24 +55,26 @@
         <h1>top {contentType} {timeRanges[timeRange]}</h1>
         <div class="grid">
             {#each content as card, i}
-                <figure data-index={i + 1}>
-                    <img src={card.image} alt={card.caption} />
-                    <figcaption>{card.caption}</figcaption>
-                </figure>
+                <div class="figure-wrapper">
+                    <figure data-index={i + 1}>
+                        <img src={card.image} alt={card.caption} />
+                        <figcaption>{card.caption}</figcaption>
+                    </figure>
+                </div>
             {/each}
         </div>
-        <h2>unwrapped.saintkappa.xyz</h2>
+        <h2>unwrapped.top</h2>
     </div>
 </div>
 
 <style>
     :root {
         --image-padding: 0.75rem;
-        --border-radius: 1.15rem;
     }
 
     .image-container {
         transform: scale(0) !important;
+        /* z-index: 2; */
         pointer-events: none;
         background-color: var(--bg-primary);
         position: absolute;
@@ -94,7 +96,7 @@
         font-family: GothamBlack, sans-serif;
         margin: 0.5rem;
         line-height: 1;
-        text-shadow: 4px 4px 4px black;
+        text-shadow: 3px 3px 2px black;
     }
 
     h1 {
@@ -103,6 +105,7 @@
 
     h2 {
         font-size: 1.75rem;
+        font-style: italic;
     }
 
     .grid {
@@ -111,31 +114,32 @@
         grid-template-columns: repeat(4, 1fr);
     }
 
+    .figure-wrapper {
+        transform: scale(1);
+    }
+
     figure {
         position: relative;
+        overflow: hidden;
         aspect-ratio: 1;
         display: flex;
         justify-content: center;
         align-items: center;
         box-shadow: 4px 4px 4px black;
-        border-radius: var(--border-radius);
-    }
-
-    figure img {
-        border-radius: var(--border-radius);
+        border-radius: 1.15rem;
     }
 
     figure::before {
         content: '';
         position: absolute;
         inset: 0;
-        border-radius: var(--border-radius);
         background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, transparent 60%);
     }
 
     figure::after {
+        display: block;
         content: attr(data-index);
-        position: absolute;
+        position: fixed;
         font-family: GothamBlack;
         background-color: var(--avg-color);
         border-radius: 50%;
