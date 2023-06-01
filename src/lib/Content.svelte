@@ -32,7 +32,7 @@
 
         const data = [...res[0]?.items, ...res[1]?.items];
 
-        content[type][timeRange] = data.map((item: UsersTopItem) => {
+        content[type][timeRange] = data.map((item: UsersTopItem): Card => {
             return {
                 caption: item.name,
                 image: item.type === 'artist' ? item.images[0]?.url ?? './artist-empty.svg' : item.album.images[0]?.url ?? './track-empty.svg',

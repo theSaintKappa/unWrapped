@@ -1,5 +1,6 @@
 <script lang="ts">
     import { toPng } from 'html-to-image';
+    import { FastAverageColor } from 'fast-average-color';
 
     export let contentType: ContentType, timeRange: TimeRange, user: User;
     export let content: Card[];
@@ -10,7 +11,7 @@
     function downloadImage() {
         downloadButtonContent = 'Downloading...';
 
-        toPng(imageContainer, { cacheBust: true, pixelRatio: 2, width: 1080, style: { transform: 'scale(1)' } })
+        toPng(imageContainer, { cacheBust: true, pixelRatio: 1.5, width: 1080, style: { transform: 'scale(1)' } })
             .then((dataUrl) => {
                 const link = document.createElement('a');
                 // prettier-ignore
@@ -31,18 +32,30 @@
                 console.error(err);
             });
     }
-    let imageString: string;
-    $: imageString = `${user.displayName}'s top ${contentType} ${timeRange === 'long_term' ? 'of all time' : `in the last ${timeRange === 'medium_term' ? '6 months' : '4 weeks'}`}`;
+
+    const fac = new FastAverageColor();
+    let pfpAverageColor = 'white';
+    (async () => {
+        await fac.getColorAsync(user.avatar).then((color) => {
+            pfpAverageColor = color.rgba;
+        });
+    })();
+
+    const timeRanges = {
+        long_term: 'of all time',
+        medium_term: 'in the last 6 months',
+        short_term: 'in the last 4 weeks',
+    } as const;
 </script>
 
 <button on:click={downloadImage}>{downloadButtonContent}</button>
 
-<div class="image-container" bind:this={imageContainer}>
+<div class="image-container" bind:this={imageContainer} style="--avg-color: {pfpAverageColor};">
     <div>
-        <h1 style="font-size: {imageString.length < 50 ? 40 - (imageString.length - 40) : 40 - (imageString.length - 40) * 0.7}px;">{imageString}</h1>
+        <h1>top {contentType} {timeRanges[timeRange]}</h1>
         <div class="grid">
             {#each content as card, i}
-                <figure data-index={`#${i + 1}`}>
+                <figure data-index={i + 1}>
                     <img src={card.image} alt={card.caption} />
                     <figcaption>{card.caption}</figcaption>
                 </figure>
@@ -55,11 +68,13 @@
 <style>
     :root {
         --image-padding: 0.75rem;
+        --border-radius: 1.15rem;
     }
 
     .image-container {
         transform: scale(0) !important;
         pointer-events: none;
+        background-color: var(--bg-primary);
         position: absolute;
         top: 0;
         left: 0;
@@ -76,7 +91,18 @@
 
     h1,
     h2 {
+        font-family: GothamBlack, sans-serif;
+        margin: 0.5rem;
+        line-height: 1;
         text-shadow: 4px 4px 4px black;
+    }
+
+    h1 {
+        font-size: 4.1rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
     }
 
     .grid {
@@ -87,41 +113,51 @@
 
     figure {
         position: relative;
-        border-radius: 0.5rem;
-        overflow: hidden;
         aspect-ratio: 1;
         display: flex;
         justify-content: center;
         align-items: center;
         box-shadow: 4px 4px 4px black;
+        border-radius: var(--border-radius);
+    }
+
+    figure img {
+        border-radius: var(--border-radius);
     }
 
     figure::before {
         content: '';
         position: absolute;
         inset: 0;
+        border-radius: var(--border-radius);
         background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 10%, transparent 60%);
     }
 
     figure::after {
         content: attr(data-index);
-        font-family: GothamBlack;
         position: absolute;
-        top: -0.15rem;
-        left: 0.3rem;
+        font-family: GothamBlack;
+        background-color: var(--avg-color);
+        border-radius: 50%;
+        border: 4px solid var(--bg-primary);
+        width: 50px;
+        aspect-ratio: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: -0.75rem;
+        left: -0.75rem;
         font-size: 2rem;
-        -webkit-text-fill-color: rgba(255, 255, 255, 0.85);
-        -webkit-text-stroke-width: 0.05em;
-        -webkit-text-stroke-color: var(--bg-primary);
-        text-shadow: 4px 4px 2px black;
+        color: rgba(255, 255, 255, 0.85);
+        -webkit-text-stroke: 0.075em var(--bg-primary);
     }
 
     figure figcaption {
         position: absolute;
-        left: 1rem;
+        left: 0.75rem;
         bottom: 0.5rem;
-        font-size: 1.25rem;
-        text-shadow: 4px 4px 2px black;
+        font-size: 1rem;
+        text-shadow: 3px 3px 3px black;
     }
 
     button {
@@ -132,7 +168,6 @@
         transition: scale 125ms ease;
         color: #e1289f;
         filter: invert(1);
-        /* color: var(--spotify-green); */
     }
 
     button::before {
@@ -145,7 +180,6 @@
         transition: height 150ms ease;
         mix-blend-mode: difference;
         background-color: #e1289f;
-        /* background-color: var(--spotify-green); */
     }
 
     button:hover::before {
