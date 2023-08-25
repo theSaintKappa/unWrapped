@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Skeleton from './Skeleton.svelte';
     import { blur } from 'svelte/transition';
+    import Skeleton from './Skeleton.svelte';
     export let cardsContent: Card[];
 </script>
 
@@ -8,7 +8,7 @@
     {#each cardsContent as card, i}
         <a href={card.url} target="_blank" in:blur={{ delay: i * 20, duration: 350 }}>
             <figure data-index={`#${i + 1}`}>
-                <img src={card.image} alt={card.caption} />
+                <img src={card.image} alt={card.caption} loading="lazy" decoding="async" />
                 <figcaption>{card.caption}</figcaption>
             </figure>
         </a>
