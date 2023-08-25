@@ -73,8 +73,8 @@
     }
 
     .image-container {
-        transform: scale(0) !important;
-        /* z-index: 2; */
+        /* transform: scale(0) !important; */
+        z-index: 2;
         pointer-events: none;
         background-color: var(--bg-primary);
         position: absolute;
