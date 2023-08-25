@@ -1,8 +1,12 @@
 import { get } from 'svelte/store';
-import { clientId, accessToken, refreshToken } from './stores';
+import { accessToken, clientId, refreshToken } from './stores';
 
 export default async function _refreshToken() {
-    if (!get(accessToken) || !get(refreshToken)) return;
+    if (!get(refreshToken)) {
+        accessToken.set(null);
+        refreshToken.set(null);
+        return;
+    }
 
     const body = new URLSearchParams({
         grant_type: 'refresh_token',

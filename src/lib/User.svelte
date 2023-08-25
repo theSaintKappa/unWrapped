@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { user } from '../stores';
     import { blur } from 'svelte/transition';
+    import { user } from '../stores';
 </script>
 
 {#if $user}

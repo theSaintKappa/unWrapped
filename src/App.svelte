@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { code, appURI, clientId, accessToken, user, refreshToken } from './stores';
-    import _refreshToken from './refreshToken';
-    import Landing from './lib/Landing.svelte';
+    import { blur } from 'svelte/transition';
     import Content from './lib/Content.svelte';
+    import Landing from './lib/Landing.svelte';
+    import _refreshToken from './refreshToken';
+    import { accessToken, appURI, clientId, code, refreshToken, user } from './stores';
 
     $: if ($code) getToken($code);
 
@@ -48,7 +49,9 @@
 
 <main class:landing={!$accessToken}>
     {#if $accessToken !== null}
-        <Content />
+        <div out:blur={{ duration: 500 }}>
+            <Content />
+        </div>
     {:else}
         <Landing />
     {/if}
@@ -64,5 +67,13 @@
 
     main.landing {
         justify-content: center;
+    }
+
+    div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: hidden;
     }
 </style>

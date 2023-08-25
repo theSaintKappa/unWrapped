@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { accessToken, activeContentType, activeTimeRange, user } from '../stores';
     import _refreshToken from '../refreshToken';
-    import Header from './Header.svelte';
-    import User from './User.svelte';
-    import TypeTabs from './ContentTypeTabs.svelte';
-    import ImageDownload from './ImageDownload.svelte';
+    import { accessToken, activeContentType, activeTimeRange, user } from '../stores';
     import Cards from './Cards.svelte';
+    import TypeTabs from './ContentTypeTabs.svelte';
+    import Header from './Header.svelte';
+    import ImageDownload from './ImageDownload.svelte';
     import TimeRangeTabs from './TimeRangeTabs.svelte';
+    import User from './User.svelte';
 
     let randomKey = 0;
 

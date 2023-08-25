@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { toPng } from 'html-to-image';
     import { FastAverageColor } from 'fast-average-color';
+    import { toPng } from 'html-to-image';
 
     export let contentType: ContentType, timeRange: TimeRange, user: User;
     export let content: Card[];
@@ -73,8 +73,8 @@
     }
 
     .image-container {
-        transform: scale(0) !important;
-        /* z-index: 2; */
+        /* transform: scale(0) !important; */
+        z-index: 2;
         pointer-events: none;
         background-color: var(--bg-primary);
         position: absolute;
@@ -137,20 +137,20 @@
     }
 
     figure::after {
-        display: block;
         content: attr(data-index);
         position: fixed;
         font-family: GothamBlack;
         background-color: var(--avg-color);
         border-radius: 50%;
         border: 4px solid var(--bg-primary);
-        width: 50px;
+        width: 47.5px;
         aspect-ratio: 1;
+        line-height: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        top: -0.75rem;
-        left: -0.75rem;
+        top: -0.625rem;
+        left: -0.625rem;
         font-size: 2rem;
         color: rgba(255, 255, 255, 0.85);
         -webkit-text-stroke: 0.075em var(--bg-primary);
